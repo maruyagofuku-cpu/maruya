@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Using a more standard title and description -->
+    <title data-lang-key="pageTitle" data-lang-ja="丸屋【創業120年老舗呉服店】" data-lang-en="Maruya - 120-Year-Old Kimono Shop"></title>
+    <meta name="description" data-lang-key="pageDescription" 
+          data-lang-ja="千葉県横芝光町の創業120年の老舗呉服店「丸屋」。着物、浴衣、学生服、婦人服を幅広く取り揃え、オンラインショップもございます。" 
+          data-lang-en="Maruya, a 120-year-old kimono shop in Yokoshibahikari-machi, Chiba. We offer a wide selection of kimono, yukata, school uniforms, and women's clothing, with an online shop available. We help you celebrate life's milestones.">
+    
+    <!-- Third-party CSS and JS Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Noto Serif JP', serif;
+            background-color: #FDFCFB;
+            color: #333;
+        }
+        :root {
+            --brand-color: #c25523;
+        }
+        .brand-color { color: var(--brand-color); }
+        .brand-bg { background-color: var(--brand-color); }
+        .brand-border { border-color: var(--brand-color); }
+        .brand-hover-color:hover { color: var(--brand-color); }
+        .brand-hover-bg:hover { background-color: var(--brand-color); }
+        .brand-hover-border:hover { border-color: var(--brand-color); }
+
+        /* Hero Slider Styles */
+        .hero-slider .swiper-slide {
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: #fff;
+            --swiper-navigation-size: 30px;
+        }
+        .swiper-pagination-bullet-active {
+            background-color: #fff;
+        }
+        
+        /* Header Scroll Effect */
+        #main-header {
+            background-color: transparent;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        #main-header.scrolled {
+            background-color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* Update the logo and icon color for scrolled state */
+        #main-header .header-logo,
+        #main-header .header-icon {
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+        #main-header.scrolled .header-logo,
+        #main-header.scrolled .header-icon {
+            color: var(--brand-color);
+        }
+        
+        /* Language Switcher */
+        .lang-switcher button.active {
+            font-weight: bold;
+            color: #c25523;
+        }
+
+        /* Product Card Styles */
+        .product-image-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0,0,0,0.3);
+            transition: opacity 0.5s ease;
+        }
+        .product-card:hover .product-image-overlay {
+            opacity: 0;
+        }
+
+        .img-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255,255,255,0.5);
+            color: #333;
+            padding: 8px;
+            border-radius: 9999px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 20;
+        }
+        .product-card:hover .img-nav-btn {
+            opacity: 1;
+        }
+        .prev-img-btn { left: 8px; }
+        .next-img-btn { right: 8px; }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header Section -->
+    <header id="main-header" class="fixed w-full top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Updated Logo: Show "Maruya" only on mobile -->
+            <a href="#" class="text-2xl font-bold header-logo flex items-center flex-shrink-0" >
+                <img src="picture/IMG_4926.JPG" alt="丸屋ロゴ" class="w-8 h-8 rounded-full mr-2" />
+                <span data-lang-key="siteTitleMain" data-lang-ja="丸屋" data-lang-en="Maruya" class="inline"></span>
+                <span data-lang-key="siteTitleSub" data-lang-ja="【創業120年老舗呉服店】" data-lang-en=" - 120-Year-Old Kimono Shop" class="hidden sm:inline"></span>
+            </a>
+            
+            <div class="flex items-center space-x-4 md:space-x-6">
+                <a href="https://maruya.online/" class="hidden sm:block brand-bg text-white font-bold px-5 py-2 rounded-full hover:bg-opacity-90 transition-colors text-sm" data-lang-key="navShop" data-lang-ja="オンラインショップへ" data-lang-en="Online Shop"></a>
+
+                <div class="lang-switcher hidden sm:flex pl-4 border-l border-gray-300 items-center text-sm">
+                    <button data-lang="ja" class="px-2 active">日本語</button>
+                    <span>/</span>
+                    <button data-lang="en" class="px-2">English</button>
+                </div>
+
+                <div class="relative">
+                    <button id="menu-button" class="p-2 focus:outline-none" aria-label="メニューを開く">
+                        <i class="fas fa-bars text-2xl header-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dropdown Menu -->
+        <div id="dropdown-menu" class="hidden absolute top-full right-4 mt-1 w-64 bg-white rounded-lg shadow-xl z-50 border border-gray-100">
+            <nav class="p-2">
+                <a href="#concept" class="block w-full text-left px-4 py-2 text-gray-700 rounded hover:bg-purple-50 brand-hover-color" data-lang-key="navConcept" data-lang-ja="当店のこだわり" data-lang-en="Our Philosophy"></a>
+                <a href="#products" class="block w-full text-left px-4 py-2 text-gray-700 rounded hover:bg-purple-50 brand-hover-color" data-lang-key="navProducts" data-lang-ja="商品" data-lang-en="Products"></a>
+                <a href="#info" class="block w-full text-left px-4 py-2 text-gray-700 rounded hover:bg-purple-50 brand-hover-color" data-lang-key="navInfo" data-lang-ja="店舗案内" data-lang-en="Store Info"></a>
+                <a href="#contact" class="block w-full text-left px-4 py-2 text-gray-700 rounded hover:bg-purple-50 brand-hover-color" data-lang-key="navContact" data-lang-ja="お問い合わせ" data-lang-en="Contact"></a>
+                
+                <div class="mt-2 pt-2 border-t border-gray-200 sm:hidden">
+                    <a href="https://maruya.online/" class="block w-full text-center brand-bg text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-colors mb-3" data-lang-key="navShopMobile" data-lang-ja="オンラインショップへ" data-lang-en="Online Shop"></a>
+                    <div class="lang-switcher flex justify-center items-center text-sm">
+                        <button data-lang="ja" class="px-2 active">日本語</button>
+                        <span>/</span>
+                        <button data-lang="en" class="px-2">English</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Slider Section -->
+        <section class="hero-slider relative">
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" style="background-image: url('picture/トップ３枚/日常にちょっとした和を改訂版_0.jpg');"></div>
+                    <div class="swiper-slide" style="background-image: url('picture/トップ３枚/家族_0.jpg');"></div>
+                    <div class="swiper-slide" style="background-image: url('picture/トップ３枚/３枚目.PNG');"></div>
+                </div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-pagination"></div>
+            </div>
+            
+            <div class="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
+                <div class="relative text-center p-4 text-white">
+                    <h1 class="text-4xl md:text-6xl font-bold tracking-wider leading-tight" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);" data-lang-key="heroTitle" data-lang-ja="日常にちょいと和を。" data-lang-en="Wear the Pride of Japan."></h1>
+                    <p class="mt-4 text-lg md:text-xl" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.5);" data-lang-key="heroSubtitle" data-lang-ja="一枚の着物が、あなたの一日を特別な日に変える。" data-lang-en="A single kimono turns your day into a special one."></p>
+                    <a href="https://maruya.online/" class="mt-8 inline-block brand-bg text-white font-bold px-8 py-3 rounded-full hover:bg-opacity-90 transition-all text-lg shadow-lg" data-lang-key="heroButton" data-lang-ja="オンラインショップへ" data-lang-en="Online Shop"></a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Philosophy Section -->
+        <section id="concept" class="py-20 bg-white overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold brand-color" data-lang-key="conceptTitle" data-lang-ja="当店のこだわり" data-lang-en="Our Philosophy"></h2>
+                </div>
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2" data-aos="fade-right">
+                        <video src="picture/トップ３枚/初投稿動画.mov" class="w-full h-96 object-cover rounded-lg shadow-xl" autoplay loop muted playsinline></video>
+                    </div>
+                    <div class="md:w-1/2" data-aos="fade-left">
+                        <h3 class="text-2xl font-semibold mb-4 text-gray-800" data-lang-key="conceptHeading" data-lang-ja="伝統を守り、未来へ繋ぐ" data-lang-en="Protecting tradition, connecting to the future"></h3>
+                        <p class="text-gray-700 leading-relaxed" data-lang-key="conceptText" data-lang-ja="創業から120年。老舗の看板を背負い、右も左も分からぬままこの店を継ぎました。伝統を守ること、新しい風を取り入れること。その両立に悩みながらも、お客様一人ひとりの笑顔を励みに、日々着物と向き合っています。この場所が、着物を通じて皆様の人生を彩る、温かい空間でありたいと願っています。" data-lang-en="120 years since our founding. I took over this store, a well-established name, without knowing a thing. I struggled to balance preserving tradition with embracing new ideas. But with every customer's smile as my encouragement, I face kimono every day. I hope this place can be a warm space that enriches everyone's lives through kimono."></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="py-20 overflow-hidden bg-slate-50">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold brand-color" data-lang-key="productsTitle" data-lang-ja="商品" data-lang-en="Products"></h2>
+                    <p class="mt-2 text-gray-600" data-lang-key="productsSubtitle" data-lang-ja="特別な日から日常まで、彩り豊かな品々" data-lang-en="A colorful selection for special days and everyday life"></p>
+                </div>
+                <div id="product-list" class="flex flex-col"></div>
+            </div>
+        </section>
+        
+        <!-- News Section -->
+        <section id="news" class="py-20 bg-white overflow-hidden">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold brand-color" data-lang-key="newsTitle" data-lang-ja="お知らせ" data-lang-en="News"></h2>
+                </div>
+                <div id="news-list" class="divide-y divide-gray-200"></div>
+            </div>
+        </section>
+
+        <!-- Store Information Section -->
+        <section id="info" class="py-20 overflow-hidden">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12" data-aos="fade-up">
+                    <h2 class="text-3xl md:text-4xl font-bold brand-color" data-lang-key="infoTitle" data-lang-ja="店舗案内" data-lang-en="Store Information"></h2>
+                </div>
+                <div class="flex flex-col lg:flex-row gap-12 items-center">
+                    <div class="lg:w-1/2 w-full" data-aos="fade-right">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.7171255254693!2d140.48139527590467!3d35.659340431176005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6022e8c31f1ff887%3A0xdf61c2aa672d9fb7!2z5Li45bGL!5e0!3m2!1sja!2sjp!4v1756006222007!5m2!1sja!2sjp"
+                                class="w-full h-96 md:h-[500px] border-0 rounded-lg shadow-lg" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                    <div class="lg:w-1/2 w-full" data-aos="fade-left">
+                        <h3 class="text-2xl font-semibold mb-4 text-gray-800" data-lang-key="infoStoreName" data-lang-ja="丸屋" data-lang-en="Maruya - Main Store"></h3>
+                        <p class="text-gray-700 mb-2"><i class="fas fa-map-marker-alt w-6 text-center mr-2 brand-color"></i><span data-lang-key="infoAddress" data-lang-ja="〒289-1732 千葉県山武郡横芝光町横芝２１８２" data-lang-en="Chiba 〒289-1732"></span></p>
+                        <p class="text-gray-700 mb-2"><i class="fas fa-phone w-6 text-center mr-2 brand-color"></i><span data-lang-key="infoPhone" data-lang-ja="0479-82-1155" data-lang-en="0479-82-1155"></span></p>
+                        <p class="text-gray-700 mb-2"><i class="fas fa-clock w-6 text-center mr-2 brand-color"></i><span data-lang-key="infoHours" data-lang-ja="営業時間: 9:00 - 18:00" data-lang-en="Hours: 9:00 - 18:00"></span></p>
+                        <p class="text-gray-700 mb-4"><i class="fas fa-calendar-times w-6 text-center mr-2 brand-color"></i><span data-lang-key="infoClosed" data-lang-ja="定休日: 毎週火曜日" data-lang-en="Closed: Every Tuesday"></span></p>
+                        <p class="text-gray-700 leading-relaxed" data-lang-key="infoDetail" data-lang-ja="落ち着いた雰囲気の店内で、ゆっくりと着物選びをお楽しみいただけます。着付けのご相談やお手入れについても、お気軽にお声がけください。" data-lang-en="A 5-min walk from the station. Enjoy choosing your kimono in a calm atmosphere. Feel free to ask about fitting and maintenance."></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer id="contact" class="brand-bg text-white" data-aos="fade-up">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div>
+                    <h3 class="text-xl font-bold mb-4" data-lang-key="footerTitle" data-lang-ja="丸屋" data-lang-en="Maruya"></h3>
+                    <p data-lang-key="footerAddress" data-lang-ja="〒289-1732 千葉県山武郡横芝光町横芝２１８２" data-lang-en="Chiba 〒289-1732"></p>
+                    <p data-lang-key="footerPhone" data-lang-ja="電話: 0479-82-1155" data-lang-en="Phone: 0479-82-1155"></p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4" data-lang-key="footerSitemap" data-lang-ja="サイトマップ" data-lang-en="Sitemap"></h3>
+                    <ul>
+                        <li class="mb-2"><a href="#concept" class="hover:underline" data-lang-key="footerNavConcept" data-lang-ja="当店のこだわり" data-lang-en="Our Philosophy"></a></li>
+                        <li class="mb-2"><a href="#products" class="hover:underline" data-lang-key="footerNavProducts" data-lang-ja="商品" data-lang-en="Products"></a></li>
+                        <li class="mb-2"><a href="#info" class="hover:underline" data-lang-key="footerNavInfo" data-lang-ja="店舗案内" data-lang-en="Store Info"></a></li>
+                        <li class="mb-2"><a href="https://maruya.online/" class="hover:underline" data-lang-key="footerNavShop" data-lang-ja="オンラインショップ" data-lang-en="Online Shop"></a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4" data-lang-key="footerFollow" data-lang-ja="フォロー" data-lang-en="Follow Us"></h3>
+                    <div class="flex justify-center space-x-4">
+                        <a href="https://www.instagram.com/maru_maaaru120/?igsh=eWF2YnJnbXhrOGpv#" class="text-2xl hover:opacity-80 transition-opacity" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-12 border-t border-white/20 pt-8 text-center text-sm">
+                <p data-lang-key="footerCopyright" data-lang-ja="© 2025 丸屋. All Rights Reserved." data-lang-en="© 2025 Maruya. All Rights Reserved."></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- AOS and Custom JS -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        
+        // Content Data
+        const productsData = [
+            {
+                id: 'womens-yukata',
+                imgs: [
+                    'picture/商品/着物/1枚目.jpg',
+                    'picture/商品/着物/2枚目.jpg',
+                    'picture/商品/着物/3枚目.jpg'
+                ],
+                title_ja: '着物',
+                title_en: 'Kimono',
+                text_ja: '人生の節目を彩る、特別な日のための着物。成人式や卒業式、結婚式など、お客様にとって大切な瞬間に寄り添う一着をご提案します。',
+                text_en: 'Kimono for special occasions that color life\'s milestones. We offer garments that accompany you through important moments like Coming-of-Age ceremonies, graduations, and weddings.',
+                shopLink: 'https://maruya.online/collections/%E5%A5%B3%E6%80%A7%E7%94%A8%E6%B5%B1%E8%A1%A3'
+            },
+            {
+                id: 'childrens-yukata',
+                imgs: [
+                    'picture/商品/婦人服/1枚目.jpg',
+                    'picture/商品/婦人服/2枚目.jpg',
+                    'picture/商品/婦人服/3枚目.jpg'
+                ],
+                title_ja: '婦人服',
+                title_en: 'Women\'s Clothing',
+                text_ja: '日常に溶け込む、和のテイストを取り入れた現代的な婦人服。',
+                text_en: 'Modern women\'s clothing with a Japanese touch for daily wear.',
+            },
+            {
+                id: 'yukata-sleeves',
+                imgs: [
+                    'picture/商品/学生服/1枚目.jpg',
+                    'picture/商品/学生服/2枚目.jpg',
+                    'picture/商品/学生服/3枚目.jpg'
+                ],
+                title_ja: '学生服',
+                title_en: 'School Uniforms',
+                text_ja: '学生生活を快適に過ごすための、機能的で耐久性のある学生服。',
+                text_en: 'Functional and durable school uniforms for a comfortable student experience.',
+            }
+        ];
+
+        const newsData = [
+            { date: '2025.08.24', text_ja: 'ウェブサイトを公開しました。', text_en: 'Our website has been renewed.' }
+        ];
+
+        // Cache DOM elements
+        const elements = {
+            mainHeader: document.getElementById('main-header'),
+            menuButton: document.getElementById('menu-button'),
+            dropdownMenu: document.getElementById('dropdown-menu'),
+            langButtons: document.querySelectorAll('.lang-switcher button'),
+            productListContainer: document.getElementById('product-list'),
+            newsListContainer: document.getElementById('news-list'),
+            translatableElements: document.querySelectorAll('[data-lang-key]'),
+        };
+
+        const productCarousels = {};
+        
+        // Initialize hero slider
+        function initSlider() {
+            new Swiper('.swiper', {
+                loop: true,
+                effect: 'fade',
+                fadeEffect: {
+                    crossFade: true
+                },
+                autoplay: {
+                    delay: 5000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        }
+
+        // Toggle menu visibility
+        function toggleMenu() {
+            elements.dropdownMenu.classList.toggle('hidden');
+        }
+
+        // Close menu when clicking outside
+        function closeMenuOnClickOutside(event) {
+            if (!elements.dropdownMenu.classList.contains('hidden') && 
+                !elements.dropdownMenu.contains(event.target) && 
+                !elements.menuButton.contains(event.target)) {
+                elements.dropdownMenu.classList.add('hidden');
+            }
+        }
+
+        // Switch the page's language
+        function switchLanguage(lang) {
+            document.documentElement.lang = lang;
+            
+            elements.translatableElements.forEach(el => {
+                const key = `lang${lang.charAt(0).toUpperCase() + lang.slice(1)}`;
+                if (el.dataset[key]) {
+                    if (el.tagName.toLowerCase() === 'meta') {
+                        el.content = el.dataset[key];
+                    } else {
+                        el.innerHTML = el.dataset[key];
+                    }
+                }
+            });
+
+            elements.langButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            renderProducts(lang);
+            renderNews(lang);
+        }
+
+        // Change product image
+        function changeProductImage(productId, direction) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+
+            const productImageElement = document.querySelector(`.product-image[data-product-id="${productId}"]`);
+            if (!productImageElement) return;
+
+            let currentIndex = parseInt(productImageElement.dataset.currentImgIndex);
+            let newIndex = currentIndex;
+
+            if (direction === 'next') {
+                newIndex = (currentIndex + 1) % product.imgs.length;
+            } else if (direction === 'prev') {
+                newIndex = (currentIndex - 1 + product.imgs.length) % product.imgs.length;
+            }
+
+            productImageElement.src = product.imgs[newIndex];
+            productImageElement.dataset.currentImgIndex = newIndex;
+        }
+
+        // Start automatic product image carousel for each product
+        function startProductImageCarousel(productId, imageContainer) {
+            if (productCarousels[productId]) {
+                clearInterval(productCarousels[productId]);
+            }
+
+            const intervalId = setInterval(() => {
+                changeProductImage(productId, 'next');
+            }, 3000);
+
+            productCarousels[productId] = intervalId;
+
+            imageContainer.addEventListener('mouseenter', () => {
+                clearInterval(productCarousels[productId]);
+            });
+            imageContainer.addEventListener('mouseleave', () => {
+                productCarousels[productId] = setInterval(() => {
+                    changeProductImage(productId, 'next');
+                }, 3000);
+            });
+        }
+
+        // Render product cards
+        function renderProducts(lang) {
+            if (!elements.productListContainer) return;
+
+            for (const productId in productCarousels) {
+                clearInterval(productCarousels[productId]);
+            }
+            elements.productListContainer.innerHTML = '';
+
+            productsData.forEach((product, index) => {
+                const title = lang === 'ja' ? product.title_ja : product.title_en;
+                const text = lang === 'ja' ? product.text_ja : product.text_en;
+                const shopButtonText = lang === 'ja' ? 'ショップへ' : 'To the Shop';
+                const delay = index * 150;
+
+                const isEven = index % 2 === 0;
+                const flexDirectionClass = isEven ? 'lg:flex-row' : 'lg:flex-row-reverse';
+                const imageAOS = isEven ? 'fade-right' : 'fade-left';
+                const textAOS = isEven ? 'fade-left' : 'fade-right';
+                
+                const productItemHTML = `
+                    <div class="product-item flex flex-col ${flexDirectionClass} items-center justify-center lg:gap-12 py-16 px-4 sm:px-6">
+                        <div class="lg:w-1/2 w-full relative overflow-hidden rounded-lg shadow-xl product-card group" data-aos="${imageAOS}" data-aos-delay="${delay}">
+                            <img src="${product.imgs[0]}" alt="${title}" class="w-full h-[450px] object-cover product-image transition-transform duration-500 group-hover:scale-110" data-product-id="${product.id}" data-current-img-index="0">
+                            <div class="product-image-overlay"></div>
+                            <button class="img-nav-btn prev-img-btn" data-product-id="${product.id}">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="img-nav-btn next-img-btn" data-product-id="${product.id}">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        <div class="lg:w-1/2 w-full p-6 text-center lg:text-left flex flex-col items-center lg:items-start justify-center" data-aos="${textAOS}" data-aos-delay="${delay + 100}">
+                            <div class="flex flex-col lg:flex-col lg:justify-center lg:items-start lg:h-full lg:mb-6">
+                                <h3 class="text-3xl font-bold brand-color mb-4">${title}</h3>
+                                <p class="text-gray-700 leading-relaxed text-lg">${text}</p>
+                            </div>
+                            ${product.shopLink ? `
+                            <a href="${product.shopLink}" class="mt-6 inline-block brand-bg text-white font-bold px-6 py-2 rounded-full hover:bg-opacity-90 transition-all text-base shadow-lg">
+                                ${shopButtonText}
+                            </a>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                elements.productListContainer.insertAdjacentHTML('beforeend', productItemHTML);
+            });
+
+            productsData.forEach(product => {
+                const imageContainer = elements.productListContainer.querySelector(`.product-card img[data-product-id="${product.id}"]`).closest('.product-card');
+                if (imageContainer) {
+                    startProductImageCarousel(product.id, imageContainer);
+                }
+            });
+        }
+
+        // Render news items
+        function renderNews(lang) {
+            if (!elements.newsListContainer) return;
+            elements.newsListContainer.innerHTML = '';
+            newsData.forEach((item, index) => {
+                const text = lang === 'ja' ? item.text_ja : item.text_en;
+                const delay = index * 100;
+                
+                const newsHTML = `
+                    <div class="py-4 flex items-baseline" data-aos="fade-up" data-aos-delay="${delay}">
+                        <span class="text-gray-500 mr-4">${item.date}</span>
+                        <p class="text-gray-800">${text}</p>
+                    </div>
+                `;
+                elements.newsListContainer.innerHTML += newsHTML;
+            });
+        }
+
+        // Toggle header style on scroll
+        function handleScroll() {
+            if (window.scrollY > 50) {
+                elements.mainHeader.classList.add('scrolled');
+            } else {
+                elements.mainHeader.classList.remove('scrolled');
+            }
+        }
+
+        // Event Listeners
+        elements.menuButton.addEventListener('click', (event) => {
+            event.stopPropagation();
+            toggleMenu();
+        });
+
+        document.addEventListener('click', closeMenuOnClickOutside);
+
+        elements.langButtons.forEach(btn => {
+            btn.addEventListener('click', () => switchLanguage(btn.dataset.lang));
+        });
+
+        window.addEventListener('scroll', handleScroll);
+
+        elements.productListContainer.addEventListener('click', (event) => {
+            const target = event.target.closest('.img-nav-btn');
+            if (target) {
+                const productId = target.dataset.productId;
+                if (productCarousels[productId]) {
+                    clearInterval(productCarousels[productId]);
+                }
+
+                if (target.classList.contains('next-img-btn')) {
+                    changeProductImage(productId, 'next');
+                } else if (target.classList.contains('prev-img-btn')) {
+                    changeProductImage(productId, 'prev');
+                }
+                setTimeout(() => {
+                    const imageContainer = elements.productListContainer.querySelector(`.product-card img[data-product-id="${productId}"]`).closest('.product-card');
+                    if (imageContainer) {
+                        startProductImageCarousel(productId, imageContainer);
+                    }
+                }, 5000);
+            }
+        });
+
+        // Initialization
+        function init() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                offset: 100,
+            });
+
+            initSlider();
+            switchLanguage('ja');
+            handleScroll();
+        }
+
+        init();
+    });
+    </script>
+</body>
+</html>
